@@ -1,0 +1,19 @@
+name: Deploy to Cloud Foundry
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:   
+  deploy:
+    runs-on: ubuntu-18.04
+    
+    steps:
+      - uses: actions/checkout@v3
+      - uses: murillomamud/action-deploy-cap@master
+        with:
+          cf_api: https://api.cf.us10-001.hana.ondemand.com
+          cf_username: ${{ secrets.CF_USER }}
+          cf_password: ${{ secrets.CF_PASSWORD }}
+          command: cf push helloworld-nomta random route
